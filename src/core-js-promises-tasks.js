@@ -143,12 +143,10 @@ function getAllResult(promises) {
  * [promise1, promise4, promise3, promise2] => Promise.resolved('10403020')
  */
 function queuPromises(promises) {
-  return promises.reduce((promiseChain, currentPromise) => {
-    return promiseChain.then((chainResults) =>
-      currentPromise.then(
-        (currentResult) => chainResults + currentResult.toString()
-      )
-    );
+  return promises.reduce((acc, next) => {
+    return acc.then((data) => {
+      return next.then((data1) => data.concat(data1));
+    });
   }, Promise.resolve(''));
 }
 
